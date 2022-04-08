@@ -19,6 +19,16 @@ export const router = new VueRouter({
             name: 'CartProducts',
             component:()=> import('@/components/CartProducts')
         },
+        {
+            path: '/Signup',
+            name: 'Signup',
+            component:()=> import('@/components/Signup')
+        },
+        {
+            path: '/Login',
+            name: 'Login',
+            component:()=> import('@/components/Login')
+        },
     ],
     mode:"history"
 })

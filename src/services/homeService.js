@@ -1,7 +1,7 @@
 import { Axios } from "./Axios";
 
 function getHome() {
-    return Axios.get("products/4");
+    return Axios.get("home");
 }
 
 export const homeService = {

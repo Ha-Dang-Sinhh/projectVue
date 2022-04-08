@@ -17,7 +17,7 @@
           <i class="fa-solid fa-bars text-2xl"></i>
         </div>
         <div class=" relative">
-          <span class="w-6 h-6 rounded-full flex justify-center -top-3 -right-3 items-center bg-green-400 absolute ">0</span>
+          <span class="w-6 h-6 rounded-full flex justify-center -top-3 -right-3 items-center bg-red-500 absolute ">0</span>
           <i class="fa-solid fa-cart-plus text-2xl"></i>
           <!--          <img class="w-14 h-14" src="./../assets/cart.svg" alt="">-->
         </div>
