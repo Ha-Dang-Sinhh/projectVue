@@ -55,7 +55,9 @@ export default {
         console.log(e);
       }
     },
+
     addToCart(idProductItem) {
+      console.log(this.carts);
       if(this.carts.find(product=>product.id==idProductItem)){
         alert('sp đã có trong giỏ hàng')
       }else {
@@ -71,6 +73,7 @@ export default {
   },
   mounted() {
     this.getData();
+    this.carts = JSON.parse(localStorage.getItem('carts'))
   }
 }
 </script>

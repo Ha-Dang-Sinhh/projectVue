@@ -38,16 +38,16 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
+            <tr v-for="(cartItem,cartIndex) in cartProducts" :key="cartIndex">
               <td class="hidden pb-4 md:table-cell">
                 <a href="#">
-                  <img src="https://limg.app/i/Calm-Cormorant-Catholic-Pinball-Blaster-yM4oub.jpeg" class="w-20 rounded"
+                  <img :src="cartItem.image.full_image_path" class="w-20 rounded"
                        alt="Thumbnail">
                 </a>
               </td>
               <td>
                 <a href="#">
-                  <p class="mb-2 md:ml-4">Earphone</p>
+                  <p class="mb-2 md:ml-4">{{cartItem.name}}</p>
                   <form action="" method="POST">
                     <button type="submit" class="text-gray-700 md:ml-4">
                       <small>(Remove item)</small>
@@ -57,20 +57,21 @@
               </td>
               <td class="justify-center md:justify-end md:flex mt-6">
                 <div class="w-20 h-10">
-                  <div class="relative flex flex-row w-full h-8">
-                    <input type="number" value="2"
-                           class="w-full font-semibold text-center text-gray-700 bg-gray-200 outline-none focus:outline-none hover:text-black focus:text-black"/>
+                  <div class="relative flex flex-row w-full h-8 gap-3">
+                    <button class="w-10 h-6 text-xl rounded-full " @click="cartItem.quantity--" :disabled="cartItem.quantity ==1">-</button>
+                    <span class="w-10 font-semibold text-xl text-center text-gray-700 outline-none focus:outline-none hover:text-black focus:text-black">{{cartItem.quantity}}</span>
+                    <button class="w-10 h-6 text-xl rounded-full " @click="cartItem.quantity++">+</button>
                   </div>
                 </div>
               </td>
               <td class="hidden text-right md:table-cell">
               <span class="text-sm lg:text-base font-medium">
-                10.00€
+                {{cartItem.price}}
               </span>
               </td>
               <td class="text-right">
               <span class="text-sm lg:text-base font-medium">
-                20.00€
+                {{cartItem.price * cartItem.quantity}} $
               </span>
               </td>
             </tr>
@@ -84,7 +85,6 @@
             </svg>
             <span class="ml-2 mt-5px">Procceed to checkout</span>
           </button>
-{{cartProducts}}
         </div>
       </div>
     </div>
@@ -103,8 +103,9 @@ export default {
 
   },
   mounted() {
-    this.cartProducts = JSON.parse(localStorage.getItem('carts'));
 
+    this.cartProducts = JSON.parse(localStorage.getItem('carts'));
+    console.log(this.cartProducts)
   },
 }
 </script>

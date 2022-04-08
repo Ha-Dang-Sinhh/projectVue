@@ -168,8 +168,8 @@ export default {
           phone:this.user.phone,
           email:this.user.email,
           password:this.user.password,
-          confirmPassword:this.user.confirmPassword,
         });
+        this.$router.push({name:'Login'});
       } catch (e) {
         // alert(e)
       }

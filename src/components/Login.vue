@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form class="md:w-1/3 w-full p-10 my-20 rounded mx-auto flex flex-col form-wrapper shadow-lg shadow-black-500/50" @submit.prevent="signup" method="" action="">
+    <form class="md:w-1/3 w-full p-10 my-20 rounded mx-auto flex flex-col form-wrapper shadow-lg shadow-black-500/50" @submit.prevent="login" method="" action="">
 
       <div class="mb-6 pt-3 rounded text-md text-grey-700">
         <label class="block text-grey-700 text-md font-semibold mb-2 ml-3">
@@ -78,19 +78,23 @@ export default {
       this.countErr = 0;
       return true;
     },
-    async signup(e) {
-      // const isValid = this.Validate();
-      // if (!isValid) {
-      //   return;
-      // }
+    async login(e) {
+      const isValid = this.Validate();
+      if (!isValid) {
+        return;
+      }
       try {
-        await loginService.loginProduct({
+        const data = await loginService.loginProduct({
           email:this.user.email,
           password:this.user.password,
-        });
+        }).then((res)=>{
+          localStorage.setItem("token", res.data.token);
+          alert(res.data.message)
+        })
+        // await data.res
         //xử lý tiếp,
       } catch (e) {
-        alert(e.message);
+        console.log(e.res);
       }
     },
   },
