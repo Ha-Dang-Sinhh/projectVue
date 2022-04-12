@@ -29,6 +29,26 @@ export const router = new VueRouter({
             name: 'Login',
             component:()=> import('@/components/Login')
         },
+        {
+            path: '/Order',
+            name: 'Order',
+            component:()=> import('@/components/OrderProduct')
+        },
+        {
+            path: '/OrderSuccess',
+            name: 'OrderSuccess',
+            component:()=> import('@/components/OrderSuccess')
+        },
+        {
+            path: '/EditProfile',
+            name: 'EditProfile',
+            component:()=> import('@/components/EditProfile')
+        },
+        {
+            path: '/ListOrder',
+            name: 'ListOrder',
+            component:()=> import('@/components/ListOrder')
+        },
     ],
     mode:"history"
 })

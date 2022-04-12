@@ -1,26 +1,6 @@
 <template>
   <div>
     <h2 class="block text-center text-2xl font-bold mt-2">Giỏ hàng</h2>
-<!--    <div >-->
-<!--      <div>-->
-<!--        <h6>Tên sản phẩm</h6>-->
-<!--        <h6>{{cartProducts.name}}</h6>-->
-<!--      </div>-->
-<!--      <div>-->
-<!--        <h6>Số Lượng</h6>-->
-<!--        <button @click="cartProducts.quantity&#45;&#45;" :disabled="cartProducts.quantity ==1" >-</button>-->
-<!--        <span>{{cartProducts.quantity}}</span>-->
-<!--        <button @click="cartProducts.quantity++">+</button>-->
-<!--      </div>-->
-<!--      <div>-->
-<!--        <h6>Giá/1 đv</h6>-->
-<!--        <h6>{{cartProducts.price}}</h6>-->
-<!--      </div>-->
-<!--      <div>-->
-<!--        <h6>Tổng giá</h6>-->
-<!--        <h6>{{cartProducts.price * cartProducts.quantity}}</h6>-->
-<!--      </div>-->
-<!--    </div>-->
     <div class="flex justify-center my-6">
       <div class="flex flex-col w-full p-8 text-gray-800 bg-white shadow-lg pin-r pin-y md:w-4/5 lg:w-4/5">
         <div class="flex-1">
@@ -46,21 +26,17 @@
                 </a>
               </td>
               <td>
-                <a href="#">
                   <p class="mb-2 md:ml-4">{{cartItem.name}}</p>
-                  <form action="" method="POST">
-                    <button type="submit" class="text-gray-700 md:ml-4">
-                      <small>(Remove item)</small>
-                    </button>
-                  </form>
-                </a>
+                  <button type="submit" class="text-gray-700 md:ml-4" @click="removeItemCart(cartItem.id)">
+                    Remove item
+                  </button>
               </td>
               <td class="justify-center md:justify-end md:flex mt-6">
                 <div class="w-20 h-10">
                   <div class="relative flex flex-row w-full h-8 gap-3">
-                    <button class="w-10 h-6 text-xl rounded-full " @click="cartItem.quantity--" :disabled="cartItem.quantity ==1">-</button>
+                    <button class="w-10 h-6 text-xl rounded-full " @click="updateQuantity(cartIndex,-1)" :disabled="cartItem.quantity ==1">-</button>
                     <span class="w-10 font-semibold text-xl text-center text-gray-700 outline-none focus:outline-none hover:text-black focus:text-black">{{cartItem.quantity}}</span>
-                    <button class="w-10 h-6 text-xl rounded-full " @click="cartItem.quantity++">+</button>
+                    <button class="w-10 h-6 text-xl rounded-full " @click="updateQuantity(cartIndex,+1)">+</button>
                   </div>
                 </div>
               </td>
@@ -71,7 +47,7 @@
               </td>
               <td class="text-right">
               <span class="text-sm lg:text-base font-medium">
-                {{cartItem.price * cartItem.quantity}} $
+                ${{cartItem.price * cartItem.quantity}}
               </span>
               </td>
             </tr>
@@ -83,7 +59,7 @@
                  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
               <path fill="currentColor" d="M527.9 32H48.1C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48.1 48h479.8c26.6 0 48.1-21.5 48.1-48V80c0-26.5-21.5-48-48.1-48zM54.1 80h467.8c3.3 0 6 2.7 6 6v42H48.1V86c0-3.3 2.7-6 6-6zm467.8 352H54.1c-3.3 0-6-2.7-6-6V256h479.8v170c0 3.3-2.7 6-6 6zM192 332v40c0 6.6-5.4 12-12 12h-72c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h72c6.6 0 12 5.4 12 12zm192 0v40c0 6.6-5.4 12-12 12H236c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h136c6.6 0 12 5.4 12 12z"/>
             </svg>
-            <span class="ml-2 mt-5px">Procceed to checkout</span>
+            <span class="ml-2 mt-5px" @click="goToOder()">Procceed to checkout</span>
           </button>
         </div>
       </div>
@@ -100,12 +76,28 @@ export default {
     }
   },
   methods: {
-
+    removeItemCart(id) {
+      this.cartProducts.splice(this.cartProducts.find(item => item.id === id), 1);
+      localStorage.setItem("carts", JSON.stringify(this.cartProducts))
+      alert('xóa sản phẩm khỏi giỏ hàng');
+    },
+    updateQuantity(itemCartIndex, quantityUnit) {
+      if (this.cartProducts[itemCartIndex].quantity + quantityUnit <= 0) {
+        this.removeItemCart(this.carts[itemCartIndex].id);
+      } else {
+        this.cartProducts[itemCartIndex].quantity += quantityUnit;
+        localStorage.setItem('carts', JSON.stringify(this.cartProducts));
+      }
+    },
+    goToOder(){
+      window.location.href = '/Order';
+    }
   },
-  mounted() {
 
-    this.cartProducts = JSON.parse(localStorage.getItem('carts'));
-    console.log(this.cartProducts)
+  mounted() {
+    if (localStorage.getItem("carts")) {
+      this.cartProducts = JSON.parse(localStorage.getItem("carts"))
+    }
   },
 }
 </script>

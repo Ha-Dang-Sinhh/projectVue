@@ -5,7 +5,7 @@
     </div>
     <div class=" grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 lg:mx-10 mx-5" >
       <div class="productItem w-auto h-auto shadow-lg shadow-black-500/50 relative" v-for="(lastProductsItem,index) in lastProducts" :key="index" >
-<!--        <router-link :to="{name:'ProductDetail',query:{id:lastProductsItem.id}}">-->
+        <router-link :to="{name:'ProductDetail',query:{id:lastProductsItem.id}}">
           <img class="w-full h-72 object-cover" :src="lastProductsItem.image.full_image_path || img" alt="">
           <div class="mx-3 my-2 ">
             <div class="flex justify-between items-center">
@@ -27,7 +27,7 @@
               </div>
             </div>
           </div>
-<!--        </router-link>-->
+        </router-link>
       </div>
     </div>
   </div>
@@ -73,7 +73,9 @@ export default {
   },
   mounted() {
     this.getData();
-    this.carts = JSON.parse(localStorage.getItem('carts'))
+    if(localStorage.getItem('carts')){
+      this.carts = JSON.parse(localStorage.getItem('carts'))
+    }
   }
 }
 </script>

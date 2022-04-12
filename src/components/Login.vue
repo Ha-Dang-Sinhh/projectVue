@@ -53,7 +53,6 @@ export default {
   },
   methods: {
     Validate () {
-
       if (!this.user.email) {
         this.err.email = "Email is required.";
         this.countErr++;
@@ -84,17 +83,18 @@ export default {
         return;
       }
       try {
-        const data = await loginService.loginProduct({
+        const resp = await loginService.loginProduct({
           email:this.user.email,
           password:this.user.password,
-        }).then((res)=>{
-          localStorage.setItem("token", res.data.token);
-          alert(res.data.message)
-        })
+        });
+        const data = resp.data;
+        localStorage.setItem("token", data.token);
+        alert(data.message);
+        window.location.href = '/';
         // await data.res
         //xử lý tiếp,
       } catch (e) {
-        console.log(e.res);
+        alert('Tại bạn ngu nên bạn không đăng nhập được ahihi ^_^ ');
       }
     },
   },
