@@ -4,7 +4,7 @@
 
       <div class="bg-white relative  w-5/6 md:w-4/6  lg:w-3/6 xl:w-2/6 mx-auto">
         <div class="flex justify-center">
-          <img :src="avatar" alt="" class="rounded-full mx-auto absolute -top-20 w-32 h-32 shadow-2xl border-4 border-white">
+          <img :src="avatar" alt="" class="rounded-full mx-auto absolute -top-20 w-32 h-32 shadow-2xl border-4 border-white object-cover">
           <input type="file" class="image-uploads hidden" id="image-change" accept="image/*" v-on:change="onImageChange" multiple />
           <label class="image-upload cursor-pointer" for="image-change"  >
             <i class="fa-solid fa-camera z-50 mt-16 shadow-xl"></i>
@@ -85,7 +85,10 @@ export default {
       try{
         const resp = await authService.getUser();
         this.user = resp.data;
-        console.log(this.user);
+        if(this.user.full_avatar_path){
+          console.log(this.user.full_avatar_path);
+          this.avatar = this.user.full_avatar_path;
+        }
       }catch(e) {
         console.log(e);
       }
@@ -118,7 +121,7 @@ export default {
   },
   mounted() {
     this.getUser();
-    this.avatar = this.user.full_avatar_path;
+
     }
 }
 </script>
